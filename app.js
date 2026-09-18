@@ -16,6 +16,7 @@
   const chips = document.getElementById('suggestions');
   const bar = document.getElementById('promptBar');
   const send = bar.querySelector('.send');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── self-typing ghost ── */
   let promptIndex = 0;
@@ -24,6 +25,7 @@
   let paused = false;
 
   function tick() {
+    if (reduceMotion) { ghost.textContent = PROMPTS[0]; return; }
     if (paused || input.value) { ghost.textContent = ''; schedule(600); return; }
     const full = PROMPTS[promptIndex];
     if (!deleting) {
